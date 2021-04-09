@@ -1,0 +1,17 @@
+
+.add_pizza {
+    margin-right: 10px;
+}
+
+.panel_ingredients {
+    overflow-y: auto;
+    margin-bottom: 30px;
+}
+
+.panel_auto {
+    height: auto!important;
+}
+
+.h170 {
+    height: 170px;
+}

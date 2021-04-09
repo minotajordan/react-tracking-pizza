@@ -14,3 +14,250 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.progress-bottom {
+  width: 50%;
+  padding: 0!important;
+  margin: 0!important;
+}
+
+.progress-bottom .progress{
+  width: 50%;
+  border-radius: 5rem 5rem 0.00rem 0.00rem;
+}
+
+.ico-circle {
+  background-color: #5a5c72;
+  padding: 15px;
+  margin: -12px;
+  border-radius: 50%;
+  text-align: center;
+  transition: all 0.8s ease-in-out;
+}
+
+@keyframes latidos {
+  from { transform: none; }
+  50% { transform: scale(1.05); }
+  to { transform: none; }
+}
+
+.opacity-10 {
+  opacity: 10%;
+}
+
+.card-effect:hover .ico-circle {
+  transition: all 0.8s ease;
+  animation: latidos 1s infinite;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 3%;
+    
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+
+.sub-menu-one i {
+  font-size: 10px;
+  margin-top: 7px;
+  position: absolute;
+  font-weight: 700;
+}
+
+.list-group-item i {
+  animation-name: slidein;
+}
+
+.list-group-item:hover i {
+  transition: all 0.8s ease;
+  animation-duration: 1s;
+  animation-name: slidein;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.list-group-item:hover span {
+  font-weight: 500;
+  transition: 0.3s;
+  transition: all 0.1s ease-out;
+}
+
+.list-group-item span {
+  transition: 0.3s;
+  transition: all 0.1s ease-out;
+}
+
+.sub-menu-one span {
+  margin: 7px 10px 10px 20px;
+  position: relative;
+}
+
+.card-effect {
+  cursor: pointer;
+}
+
+.bg-dark .text-xs, .bg-dark .h5{
+  color: white!important;
+}
+
+.bg-dark .ico-circle {
+  background-color: white;
+}
+
+.bg-dark .ico-circle {
+  color: #5a5c72!important;
+}
+
+.bg-gradient-primary {
+  /*
+  background-color: #f6c23e6b!important;
+  background-image: linear-gradient( 180deg, #e91e6333 10%, #9c27b0 100%)!important;
+  */
+  background-color: white!important;
+  background-image: linear-gradient( 180deg, white 10%, white 100%)!important;
+}
+
+.sidebar-dark .nav-item.active .nav-link,
+.navbar-nav, .sidebar-heading,
+.nav-item a{
+  color: #5a5c69!important;
+}
+
+.sidebar-dark .nav-item .nav-link i {
+  color: rgba(121, 121, 121, 0.3)!important;
+}
+
+.sidebar .nav-item .nav-link i {
+  font-size: 1.0rem!important;
+  margin-right: 0.50rem!important;
+}
+
+.denote {
+  background-color: #eaebec77;
+  cursor: pointer;
+  border-radius: 1rem;
+  height: 50px;
+  margin: 8px 20px 0px 20px;
+  width: calc(100% - 40px); /* NEW */
+  display: block!important;
+  transition: 0.3s;
+  transition: all 0.3s ease-out;
+}
+
+.denote:hover {
+  background-color: #eaebec;
+}
+
+.denote:hover i{
+  transform: rotate(-360deg)!important;
+  transition: all 0.3s ease;  
+}
+
+.denote-2 {
+  /* background-color: #eaebec77; */
+  background-image: linear-gradient( 120deg, #8861cd 10%, #5d399e 100%)!important;
+  color: white;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 13px;
+  height: 46px;
+  margin: 8px 20px 0px 20px;
+  width: calc(100% - 40px);
+  display: block!important;
+}
+
+.denote i {
+  margin: 1rem!important;
+}
+
+.card {
+  border: 0px solid #e3e6f000!important;
+}
+
+.sidebar .nav-item {
+  height: 55px!important;
+}
+
+.card .text-md {
+  font-size: 1rem;
+  color: #5a5c69!important;
+}
+
+.row .card-none {
+  background-color: transparent;
+  box-shadow: none!important;
+}
+
+.card-none .card-header {
+  border-bottom: 0px solid #e3e6f0!important;
+}
+
+.card-header:first-child {
+  /* border-radius: 0; */
+  border-radius: 1.35rem 1.35rem 0rem 0rem!important;
+}
+
+body .text-primary {
+  color: #5a5c72 !important;
+}
+
+.card-header {
+  border-bottom: 0px solid #e3e6f0 !important;
+}
+
+.card-sub-menu-one .sub-menu-one {
+  background-color: white;
+  border-radius: 0.2rem 1.2rem 1.2rem 1.2rem!important;
+}
+.card-sub-menu-one {
+  padding: 1rem 1rem 1rem 2rem!important;
+}
+
+.card-sub-menu-one .list-group-item {
+  padding: 0.30rem 1.30rem!important;
+  background-color: transparent!important;
+  border: none!important;
+}
+
+.sub-menu-one  li{
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sub-menu-one  li:hover{
+  /* transform: scale(1.03); Pendiente */
+  transition: all 0.3s ease;
+}
+
+.sidebar {
+  width: 18rem !important;
+}
+
+body .sidebar .sidebar-heading {
+  text-transform: unset !important;
+  font-size: 12px!important;
+  color: #5a5c7280!important;
+}
+
+.img-board-bg {
+  position: absolute!important;
+  width: 100%!important;
+  max-width: 100%!important;
+  margin-top: -4rem!important;
+}
+
+body .height-auto {
+  height: auto!important;
+}
+
+@media (min-width: 768px) {
+  body .sidebar {
+    width: 18rem !important;
+  }
+}
