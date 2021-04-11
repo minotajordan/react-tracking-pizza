@@ -10,7 +10,7 @@ let initialState = {
           rute: '',
           icon: 'fas fa-chevron-right',
           option: '',
-          id: '',
+          id: 1,
           status: true,
           sub_menu: [
             {
@@ -36,7 +36,7 @@ let initialState = {
           rute: '/newPizza',
           icon: 'fas fa-plus',
           option: '',
-          id: '',
+          id: 2,
           status: true,
           sub_menu: [
             {
@@ -75,7 +75,7 @@ let initialState = {
           rute: '',
           icon: 'fas fa-chevron-right',
           option: '',
-          id: '',
+          id: 3,
           status: true,
           sub_menu: [
             {
@@ -104,8 +104,13 @@ let initialState = {
 const navSlice = createSlice({
   name: 'nav',
   initialState,
+  reducers: {
+    selectMenu(state, action) {
+      state.count += 1
+    },
+  }
 })
 
-export const { increment, decrement } = navSlice.actions
+export const { selectMenu } = navSlice.actions
 
 export default navSlice.reducer
