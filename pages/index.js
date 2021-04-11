@@ -16,7 +16,7 @@ const IndexPage = ({counted, increment, decrement}) => {
 }
 
 const mapStateToProps = (state) => ({
-  counted: state.count.count
+  counted: state.count ? state.count.count : 0
 })
 
 const mapDispatchToProps = { increment, decrement }
