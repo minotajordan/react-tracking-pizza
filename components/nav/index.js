@@ -2,14 +2,20 @@ import LogoColor from '../logo/color';
 import Menu from './nav-menu';
 import NavBlock from './nav-block';
 import { connect } from 'react-redux';
+import { selectMenu } from '../../redux/actions/navAction'
 
-const Nav = ({ data_nav }) => {
+const Nav = ({ data_nav, selectMenu }) => {
+
+  const HandleSelectMenu = (menu_id, id) => {
+    console.log('HandleSelectMenu', id);
+    selectMenu({ menu_id, id });
+  }
 
   const renderNav = () => {
-    return data_nav.map(item => (
+    return data_nav && data_nav.map(item => (
       <>
         <NavBlock text={item.title} />
-        { Menu({ nav: item.nav}) }
+        { Menu({ nav: item.nav, menu_id: item.id, HandleSelectMenu: HandleSelectMenu}) }
       </>
     ))
   }
@@ -24,6 +30,8 @@ const mapStateToProps = (state) => ({
   data_nav: state.nav.data_nav
 })
 
-const mapDispatchToProps = { }
+const mapDispatchToProps = dispatch => ({
+  selectMenu: (string) => dispatch(selectMenu(string))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav)

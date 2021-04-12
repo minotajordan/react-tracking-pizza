@@ -3,12 +3,158 @@ import Head from "next/head";
 import styles from "./Pizza.module.css";
 import Nav from "../../components/nav";
 import { connect } from "react-redux";
+import { addPizza } from "../../redux/actions/productAction";
 
-const NewPizza = ({ data_ingredient }) => {
-  const [pizza, newPizza] = useState({
-    name: "Pizza de uva",
-    ingredient: [1, 2, 3, 8, 10],
+const NewPizza = ({ data_ingredient, addPizza, products }) => {
+  const [name, setName] = useState("");
+  const [fristName, setFristName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [pizzaSelect, setPizzaSelect] = useState("");
+
+  const [pizza, setPizza] = useState({
+    ingredient: [{ id: 1 }],
   });
+
+  const handleShowDetails = (item) => {
+    setPizzaSelect(item);
+    console.log("handleShowDetails", item);
+  };
+
+  const handleSavePizza = () => {
+    const payload = {
+      name,
+      ingredient: pizza.ingredient,
+    };
+    addPizza({ payload });
+  };
+
+  const pizzaDetails = () => {
+    return (
+      <>
+        <div>
+          {/* Modal */}
+          <div
+            className="modal fade"
+            id="exampleModal"
+            tabIndex={-1}
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">
+                    {pizzaSelect.name}( ${" "}
+                    {pizzaSelect.ingredient && data_ingredient
+                      .map(
+                        (key) =>
+                          pizzaSelect.ingredient.some((e) => e.id === key.id) &&
+                          pizzaSelect.ingredient.filter((e) => e.id === key.id)
+                            .length * key.price
+                      )
+                      .reduce((previous, current) => previous + current)}
+                    )
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                </div>
+                <div className="modal-body">{renderDetailsPizza()}</div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="button" className="btn btn-dark">
+                    New Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  const handleListPizza = () => {
+    return (
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name pizza</th>
+            <th scope="col">Total ingredients</th>
+            <th scope="col">Price total</th>
+            <th scope="col" className="d-flex justify-content-end">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((item) => (
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.ingredient.length}</td>
+              <td>
+                {data_ingredient
+                  .map(
+                    (key) =>
+                      item.ingredient.some((e) => e.id === key.id) &&
+                      item.ingredient.filter((e) => e.id === key.id).length *
+                        key.price
+                  )
+                  .reduce((previous, current) => previous + current)}
+              </td>
+              <td className="d-flex justify-content-end">
+                <a onClick={() => handleShowDetails(item)}>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-light"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    Details
+                  </button>
+                </a>
+                <a onClick={() => alert()}>
+                  <button type="button" class="btn btn-sm btn-dark">
+                    New Order
+                  </button>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  const handleAddPizza = (id) => {
+    const new_ingredient = pizza.ingredient.push({ id });
+    setPizza({ ...pizza, ...new_ingredient });
+  };
+
+  const handleRemove = (id) => {
+    const remove_ingredient = pizza.ingredient.filter((item) => item.id != id);
+    setPizza({ ...pizza, ...{ ingredient: remove_ingredient } });
+  };
+
+  const handleTotalPrice = () => {
+    const acumulator = data_ingredient
+      .map(
+        (key) =>
+          pizza.ingredient.some((e) => e.id === key.id) &&
+          pizza.ingredient.filter((e) => e.id === key.id).length * key.price
+      )
+      .reduce((previous, current) => previous + current);
+    return acumulator;
+  };
 
   const renderIngredientSelect = () => {
     return (
@@ -17,19 +163,30 @@ const NewPizza = ({ data_ingredient }) => {
           <tr>
             <th scope="col">Ingredient</th>
             <th scope="col">Price</th>
-            <th scope="col"  className="d-flex justify-content-end">Action</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Total</th>
+            <th scope="col" className="d-flex justify-content-end">
+              Action
+            </th>
           </tr>
         </thead>
         <tbody>
           {data_ingredient.map(
             (item) =>
-              pizza.ingredient.includes(item.id) && (
+              pizza.ingredient.some((e) => e.id === item.id) && (
                 <>
                   <tr>
                     <td>{item.name}</td>
                     <td>{item.price}</td>
+                    <td>
+                      {pizza.ingredient.filter((a) => a.id === item.id).length}
+                    </td>
+                    <td>
+                      {pizza.ingredient.filter((a) => a.id === item.id).length *
+                        item.price}
+                    </td>
                     <td className="d-flex justify-content-end">
-                      <a href='#'>
+                      <a onClick={() => handleRemove(item.id)}>
                         <i class="fas fa-minus-circle text-danger"></i>
                       </a>
                     </td>
@@ -42,16 +199,75 @@ const NewPizza = ({ data_ingredient }) => {
     );
   };
 
+  const renderDetailsPizza = () => {
+    return (
+      <>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Ingredient</th>
+              <th scope="col">Price</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data_ingredient.map(
+              (item) =>
+                pizzaSelect.ingredient &&
+                pizzaSelect.ingredient.some((e) => e.id === item.id) && (
+                  <>
+                    <tr>
+                      <td>{item.name}</td>
+                      <td>{item.price}</td>
+                      <td>
+                        {
+                          pizzaSelect.ingredient.filter((a) => a.id === item.id)
+                            .length
+                        }
+                      </td>
+                      <td>
+                        {pizzaSelect.ingredient.filter((a) => a.id === item.id)
+                          .length * item.price}
+                      </td>
+                    </tr>
+                  </>
+                )
+            )}
+          </tbody>
+        </table>
+        <hr />
+        <input
+          type="text"
+          className="form-control"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          placeholder="Nombre"
+        />
+        <hr />
+        <input
+          type="text"
+          className="form-control"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          placeholder="Telefono"
+        />
+      </>
+    );
+  };
+
   const renderIngredient = () => {
     return data_ingredient.map((item) => (
       <>
         <li className="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <i class={`${styles.add_pizza} fas fa-plus-square text-primary`}></i>
-            </div>
-            <span>
-            {item.name}
-          </span>
+          <div>
+            <a onClick={() => handleAddPizza(item.id)}>
+              <i
+                class={`${styles.add_pizza} fas fa-plus-square text-primary`}
+              ></i>
+            </a>
+          </div>
+          <span>{item.name}</span>
           <span className="badge badge-primary badge-pill">$ {item.price}</span>
         </li>
       </>
@@ -76,6 +292,7 @@ const NewPizza = ({ data_ingredient }) => {
       </Head>
       <body id="page-top">
         <div id="wrapper">
+          {pizzaDetails()}
           <Nav />
           {/* Content Wrapper */}
           <div id="content-wrapper" className="d-flex flex-column">
@@ -161,15 +378,16 @@ const NewPizza = ({ data_ingredient }) => {
                 {/* Content Row */}
                 <div className="row">
                   {/* Pie Chart */}
-                  <div className="col-xl-8 col-lg-12">
-                    <div className="card shadow mb-4">
-                      <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-primary">
-                          Create Pizza
-                        </h6>
-                      </div>
-                      <div className="card-body">
 
+                  <div className="col-8">
+                    <div className="col-xl-12 col-lg-12">
+                      <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                          <h6 className="m-0 font-weight-bold text-primary">
+                            Create Pizza
+                          </h6>
+                        </div>
+                        <div className="card-body">
                           <div className="form-group row">
                             <label
                               htmlFor="inputPassword"
@@ -181,15 +399,45 @@ const NewPizza = ({ data_ingredient }) => {
                               <input
                                 type="text"
                                 className="form-control"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
                                 placeholder="for example: Pizza de la casa"
                               />
                             </div>
                           </div>
+                          {handleTotalPrice() === 0 ? (
+                            <h3 className="text-center">
+                              Please add ingredients
+                            </h3>
+                          ) : (
+                            renderIngredientSelect()
+                          )}
+                          <button
+                            type="button"
+                            disabled={
+                              handleTotalPrice() === 0 || name.length === 0
+                            }
+                            onClick={() => handleSavePizza()}
+                            className="btn btn-outline-primary"
+                          >
+                            Save Pizza
+                          </button>
+                        </div>
+                      </div>
+                    </div>
 
-                        {renderIngredientSelect()}
+                    <div className="col-xl-12 col-lg-12">
+                      <div className="card shadow mb-4">
+                        <div className="card-header py-3">
+                          <h6 className="m-0 font-weight-bold text-primary">
+                            List Pizza
+                          </h6>
+                        </div>
+                        <div className="card-body">{handleListPizza()}</div>
                       </div>
                     </div>
                   </div>
+
                   <div className="col-xl-4 col-lg-12">
                     <div className="col-xl-12 col-lg-12">
                       <div className="card shadow mb-4">
@@ -205,14 +453,12 @@ const NewPizza = ({ data_ingredient }) => {
                             <ul className="list-group">
                               <li className="list-group-item d-flex justify-content-between align-items-center">
                                 Total price
-                                <span className="badge badge-primary badge-pill">
-                                  2
-                                </span>
+                                <strong>$ {handleTotalPrice()}</strong>
                               </li>
                               <li className="list-group-item d-flex justify-content-between align-items-center">
                                 Total ingredient
                                 <span className="badge badge-primary badge-pill">
-                                  1
+                                  {pizza.ingredient.filter((a) => a).length}
                                 </span>
                               </li>
                             </ul>
@@ -237,9 +483,7 @@ const NewPizza = ({ data_ingredient }) => {
                           className={`${styles.panel_ingredients} card-body`}
                         >
                           <div className="chart-pie pt-4 pb-2">
-                            <ul className="list-group">
-                              {renderIngredient()}
-                            </ul>
+                            <ul className="list-group">{renderIngredient()}</ul>
                           </div>
                           <div className="mt-4 text-center small">
                             <i className="fas fa-circle text-info" /> Referral
@@ -271,8 +515,11 @@ const NewPizza = ({ data_ingredient }) => {
 
 const mapStateToProps = (state) => ({
   data_ingredient: state.ingredient.ingredient,
+  products: state.product.product,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => ({
+  addPizza: (string) => dispatch(addPizza(string)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPizza);
