@@ -17,7 +17,6 @@ const NewPizza = ({ data_ingredient, addPizza, products }) => {
 
   const handleShowDetails = (item) => {
     setPizzaSelect(item);
-    console.log("handleShowDetails", item);
   };
 
   const handleSavePizza = () => {
