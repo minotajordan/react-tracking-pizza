@@ -13,7 +13,10 @@ let initialState = {
             { id: 9,name: 'jamon', price: 3000 },
             { id: 10,name: 'pollo', price: 5000 },
             { id: 11,name: 'peperoni', price: 4500 },
-            { id: 12,name: 'tocineta', price: 3000 },
+            { id: 13,name: 'pasas', price: 3000 },
+            { id: 14,name: 'pepino', price: 3000 },
+            { id: 15,name: 'arroz', price: 3000 },
+            { id: 16,name: 'tilapia', price: 3000 },
         ],
   }
 

@@ -6,7 +6,7 @@ const Menu = ({ nav, menu_id, HandleSelectMenu }) => {
     <>
       <Link href={item.rute ? item.rute : "#"}>
           <span
-            key={key}
+            key={key*9}
             onClick={() => HandleSelectMenu(menu_id, item.id)}
             className={`${item.selected ? 'select' : ''} denote`}
             data-bs-toggle="collapse"
@@ -15,7 +15,7 @@ const Menu = ({ nav, menu_id, HandleSelectMenu }) => {
             aria-expanded="false"
           >
             <i class={item.icon}></i>
-            <span>{item.name} - {item.selected}</span>
+            <span>{item.name}</span>
           </span>
       </Link>
 

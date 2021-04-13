@@ -12,9 +12,9 @@ const Nav = ({ data_nav, selectMenu }) => {
   }
 
   const renderNav = () => {
-    return data_nav && data_nav.map(item => (
+    return data_nav && data_nav.map((item, k) => (
       <>
-        <NavBlock text={item.title} />
+        <NavBlock text={item.title} key={k}/>
         { Menu({ nav: item.nav, menu_id: item.id, HandleSelectMenu: HandleSelectMenu}) }
       </>
     ))
