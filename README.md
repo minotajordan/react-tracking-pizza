@@ -1,3 +1,21 @@
+## Descripción es Español.
+Problemas a resolver:
+ - 1 Como logro persistir los datos ?
+        - Como solo era mas front que back entonces decibi usar usar redux persist
+ 
+ - 2 Pregunta de negocio: Puedo agregar mas de un ingrediente del mismo tipo a la pizza ?
+        - La respuesta despues de un breve analisis es un: Sí, claro que se puede añadir mas de (un) ingrediente del mismo tipo a una pizza nueva
+ 
+ - 3 Como uso la Api ?
+        - Nunca habia usado esta Api de modo que me horiente a usar el ejemplo de nodeJs en el controlador de la Api pero como no es asyn entonces tenia que modificar cosas del callback y en preferi usar el ejemplo de Jquery y ponerlo en modo fetch, ademas de que allí era mas claro que atributos pasaba en el Objet (body)
+ 
+ - 4 Hago un agradable panel admin o un simple admin board ?
+        - Pues me di a la tarea de tirar estilo para modificar la template basic de SB Admin 2 y agregarle un estilo minimalista para que los modulos fueran mas agradables visualmente a mi estilo
+ 
+ - 5 Hago modulos de cada proceso ? 
+        - La idea era hacerlo, pero creo que el tiempo es vital, logro poner components y omiti los container dado que prefiri cambiar todo a modo de ladding page para agilizar la entrega no es lo ideal, pero vamos que si alguien mira este code luego y no ve esto tan super organizado es por que me queda como deuda tecnica :) 
+
+
 ## Getting Started project nextJs demo basic
 
 ## Install 
